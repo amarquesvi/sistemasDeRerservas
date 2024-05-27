@@ -1,0 +1,143 @@
+/*
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/CascadeStyleSheet.css to edit this template
+*/
+/* 
+    Created on : 1 de abr. de 2024, 15:25:58
+    Author     : vihma
+*/
+
+* {
+  margin: 0;
+  padding: 0; 
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;   
+} 
+
+body {
+    background-image: url("https://images.unsplash.com/photo-1488190211105-8b0e65b80b4e?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D");
+    background-size: cover;
+    background-position: center;
+    height: 100vh !important;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    margin: 0; /* Remover margens padrão */
+    padding: 0; /* Remover preenchimento padrão */
+   
+}
+
+.container{
+  width: 320px;
+  background: transparent;
+  border: 2px solid rgba(255,255,255, .2);
+  backdrop-filter: blur(10px);
+  border-radius: 10px;
+  padding: 30px 40px;  
+  margin: auto;  
+}
+
+h1{
+ font-size: 30px;
+ text-align: center;
+ color: #fff;   
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+    height: 50px;
+    margin: 30px 0;
+    
+}
+
+.input-container input {
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(255,255,255, .2);
+    border-radius: 10px;
+    font-size: 16px;
+    color: #fff;
+    padding: 20px 45px 20px 20px;
+    
+    
+    
+}
+
+.input-container input::placeholder{
+    color: #fff;   
+}
+
+.input-container img{
+    position: absolute;
+    right: 24px;
+    top: 20%;
+    margin-top: 5px;
+    
+}
+
+
+.input-container a{
+    font-size: 16px;
+    margin-top: 5px;
+    color: #fff;
+    text-decoration: none;
+       
+}
+
+.input-container a:hover{
+    text-decoration: underline;
+    
+}
+
+.submit-button {
+    width: 100%;
+    height: 45px;
+    background-color: tan;
+    border: none;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: 10px;
+    font-weight: 500;
+    cursor: pointer;
+    outline: none;
+    font-size: 16px;
+    
+   
+}
+
+.submit-button:hover {
+    background-color: wheat
+    
+}
+
+.register-link p  {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 500;
+    
+    
+}
+
+.register-link{
+    text-align: center;
+    margin: 20px 0;
+    
+}
+
+
+.register-link p a {
+    font-size: 16px;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
+    
+    
+}
+
+.register-link p a:hover {
+    text-decoration: underline;
+}
