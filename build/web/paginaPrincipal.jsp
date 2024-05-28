@@ -51,7 +51,7 @@
             
             <div class="dropdown-menu" id="dropdown-menu">
                 <a href="paginaMinhasReservas.jsp" class="dropdown-link">Minhas Reservas</a>
-                <a href="paginaMeuPerfil.jsp" class="dropdown-link">Meu Perfil</a>
+                <a href="<%= request.getContextPath() %>/MeuPerfilServlet"" class="dropdown-link">Meu Perfil</a>
             </div>
             
         </header>

@@ -1,10 +1,5 @@
-<%-- 
-    Document   : paginaLogin
-    Created on : 4 de abr. de 2024, 15:53:57
-    Author     : vihma
---%>
-
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ page contentType="text/html" pageEncoding="UTF-8" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
 <!DOCTYPE html>
 <html>
@@ -18,9 +13,7 @@
     </head>
     <body>
         <form name="form" action="login.do" method="post">
-            
             <div class="container">
-
                 <h1>Entrar na Plataforma</h1>
 
                 <div class="input-container">
@@ -31,32 +24,19 @@
                 <div class="input-container">
                     <input type="password" name="senha" placeholder="Senha" required>
                     <img width="20" height="20" src="https://img.icons8.com/ios-glyphs/30/FFFFFF/lock--v1.png" alt="lock--v1"/>
-
-                    <a>Esqueici minha senha</a>     
+                    <a href="paginaRecuperarSenha.jsp">Esqueci minha senha</a>
                 </div>
 
                 <button type="submit" class="submit-button">Entrar</button>
-                <p> 
-                 
-                </p> 
 
                 <div class="register-link">
-                    <p>Não está cadastrado?<a href="paginaCadastro.jsp">Cadastrar</a></p>  
-
+                    <p>Não está cadastrado? <a href="paginaCadastro.jsp">Cadastrar</a></p>  
                 </div>
 
-                <div>    <%-- Verifica se o formulário foi submetido e se há uma mensagem de erro no request --%>
-<c:if test="${not empty param.email or not empty param.senha}">
-    <c:if test="${not empty requestScope.erroLogin}">
-        <div class="erro">${requestScope.erroLogin}</div>
-    </c:if>
-</c:if>   </div>
-
-        </div>
-  
-               
+                <c:if test="${not empty erroLogin}">
+                    <div class="erro">${erroLogin}</div>
+                </c:if>
+            </div>
         </form>
-       
     </body>
 </html>
-
