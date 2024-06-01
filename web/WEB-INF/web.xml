@@ -12,6 +12,10 @@
         <servlet-name>MeuPerfilServlet</servlet-name>
         <servlet-class>br.com.bean.MeuPerfilServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ReservaServlet</servlet-name>
+        <servlet-class>br.com.bean.ReservaServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>CadastrosServlet</servlet-name>
         <url-pattern>/cscadastros.do</url-pattern>
@@ -23,5 +27,9 @@
     <servlet-mapping>
         <servlet-name>MeuPerfilServlet</servlet-name>
         <url-pattern>/meuperfil.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ReservaServlet</servlet-name>
+        <url-pattern>/reserva.do</url-pattern>
     </servlet-mapping>
 </web-app>

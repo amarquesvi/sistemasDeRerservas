@@ -25,8 +25,8 @@ public class ManterReservas extends DAO {
 
             pst.setInt(1, reserva.getId_usuario());
             pst.setString(2, reserva.getLocal_reserva());
-            pst.setString(3, reserva.getData_reserva());
-            pst.setString(4, reserva.getHora_reserva());
+            pst.setDate(3, reserva.getData_reserva());
+            pst.setTime(4, reserva.getHora_reserva());
 
             int rowsAffected = pst.executeUpdate();
             if (rowsAffected > 0) {
@@ -65,8 +65,8 @@ public class ManterReservas extends DAO {
                 reserva.setId_reserva(rs.getInt("id_reserva"));
                 reserva.setId_usuario(rs.getInt("id_usuario"));
                 reserva.setLocal_reserva(rs.getString("local_reserva"));
-                reserva.setData_reserva(rs.getString("data_reserva"));
-                reserva.setHora_reserva(rs.getString("hora_reserva"));
+                reserva.setData_reserva(rs.getDate("data_reserva"));
+                reserva.setHora_reserva(rs.getTime("hora_reserva"));
                 reservas.add(reserva);
                 logger.log(Level.INFO, "Reserva encontrada: {0}", reserva);
             }

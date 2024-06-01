@@ -16,8 +16,8 @@ public class Reserva {
     private int id_reserva;
     private int id_usuario; // Referência ao usuário que fez a reserva
     private String local_reserva;
-    private String data_reserva;
-    private String hora_reserva;
+    private Date data_reserva;
+    private Time hora_reserva;
 
     public int getId_reserva() {
         return id_reserva;
@@ -43,20 +43,22 @@ public class Reserva {
         this.local_reserva = local_reserva;
     }
 
-    public String getData_reserva() {
+    public Date getData_reserva() {
         return data_reserva;
     }
 
-    public void setData_reserva(String data_reserva) {
+    public void setData_reserva(Date data_reserva) {
         this.data_reserva = data_reserva;
     }
 
-    public String getHora_reserva() {
+    public Time getHora_reserva() {
         return hora_reserva;
     }
 
-    public void setHora_reserva(String hora_reserva) {
+    public void setHora_reserva(Time hora_reserva) {
         this.hora_reserva = hora_reserva;
     }
+
+  
    
 }
