@@ -9,12 +9,20 @@
         <servlet-class>br.com.bean.LoginServlet</servlet-class>
     </servlet>
     <servlet>
+        <servlet-name>ReservaServlet</servlet-name>
+        <servlet-class>br.com.bean.ReservaServlet</servlet-class>
+    </servlet>
+    <servlet>
+        <servlet-name>MinhasReservasServlet</servlet-name>
+        <servlet-class>br.com.bean.MinhasReservasServlet</servlet-class>
+    </servlet>
+    <servlet>
         <servlet-name>MeuPerfilServlet</servlet-name>
         <servlet-class>br.com.bean.MeuPerfilServlet</servlet-class>
     </servlet>
     <servlet>
-        <servlet-name>ReservaServlet</servlet-name>
-        <servlet-class>br.com.bean.ReservaServlet</servlet-class>
+        <servlet-name>AtualizarUsuarioServlet</servlet-name>
+        <servlet-class>br.com.bean.AtualizarUsuarioServlet</servlet-class>
     </servlet>
     <servlet-mapping>
         <servlet-name>CadastrosServlet</servlet-name>
@@ -25,11 +33,19 @@
         <url-pattern>/login.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
+        <servlet-name>ReservaServlet</servlet-name>
+        <url-pattern>/reserva.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>MinhasReservasServlet</servlet-name>
+        <url-pattern>/minhasreservas.do</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
         <servlet-name>MeuPerfilServlet</servlet-name>
         <url-pattern>/meuperfil.do</url-pattern>
     </servlet-mapping>
     <servlet-mapping>
-        <servlet-name>ReservaServlet</servlet-name>
-        <url-pattern>/reserva.do</url-pattern>
+        <servlet-name>AtualizarUsuarioServlet</servlet-name>
+        <url-pattern>/atualizarUsuario.do</url-pattern>
     </servlet-mapping>
 </web-app>

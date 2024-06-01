@@ -50,8 +50,8 @@
 
 
             <div class="dropdown-menu" id="dropdown-menu">
-                <a href="<%= request.getContextPath() %>/MinhasReservasServlet" class="dropdown-link">Minhas Reservas</a>
-                <a href="<%= request.getContextPath() %>/MeuPerfilServlet"" class="dropdown-link">Meu Perfil</a>
+                <a href="<%= request.getContextPath() %>/minhasreservas.do" class="dropdown-link">Minhas Reservas</a>
+                <a href="<%= request.getContextPath() %>/meuperfil.do"" class="dropdown-link">Meu Perfil</a>
             </div>
 
         </header>

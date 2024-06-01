@@ -122,4 +122,23 @@ public class ManterUsuarios extends DAO {
         }
         return usuario;
     }
+
+    public void atualizarUsuario(int id, String nome, String email, String celular) throws Exception {
+        try {
+            abrirBanco();
+            String query = "UPDATE usuarios SET nome = ?, email = ?, celular = ? WHERE id = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, nome);
+            pst.setString(2, email);
+            pst.setString(3, celular);
+            pst.setInt(4, id);
+            pst.executeUpdate();
+            System.out.println("Dados do usuário atualizados com sucesso!");
+        } catch (SQLException e) {
+            System.out.println("Erro ao atualizar os dados do usuário: " + e.getMessage());
+            throw e;
+        } finally {
+            fecharBanco();
+        }
+    }
 }
