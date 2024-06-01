@@ -5,11 +5,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.sql.ResultSet;
-import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class ManterUsuarios extends DAO {
 
-    public void inserir(Usuario u) throws Exception {         
+    private static final Logger logger = Logger.getLogger(ManterUsuarios.class.getName());
+
+    public void inserir(Usuario u) throws Exception {
         try {
             abrirBanco();
             String query = "INSERT INTO usuarios (nome, email, celular, senha) VALUES (?, ?, ?, ?)";
@@ -19,13 +22,13 @@ public class ManterUsuarios extends DAO {
             pst.setString(3, u.getCelular());
             pst.setString(4, u.getSenha());
             pst.execute();
-            System.out.println("Registro inserido com sucesso!");
+            logger.log(Level.INFO, "Registro inserido com sucesso! Email: {0}", u.getEmail());
         } catch (Exception e) {
-            System.out.println("Erro ao inserir registro: " + e.getMessage());
+            logger.log(Level.SEVERE, "Erro ao inserir registro: ", e);
         } finally {
             if (con != null) {
                 con.close();
-                System.out.println("Conexão fechada.");
+                logger.log(Level.INFO, "Conexão fechada.");
             }
         }
     }
@@ -44,7 +47,7 @@ public class ManterUsuarios extends DAO {
                 }
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao executar a consulta: " + e.getMessage());
+            logger.log(Level.SEVERE, "Erro ao executar a consulta: ", e);
         } finally {
             fecharBanco();
         }
@@ -63,7 +66,7 @@ public class ManterUsuarios extends DAO {
                 idUsuario = rs.getInt("id");
             }
         } catch (SQLException e) {
-            System.out.println("Erro ao obter o ID do usuário: " + e.getMessage());
+            logger.log(Level.SEVERE, "Erro ao obter o ID do usuário: ", e);
             throw e;
         } finally {
             fecharBanco();
@@ -87,7 +90,32 @@ public class ManterUsuarios extends DAO {
                 usuario.setCelular(rs.getString("celular"));
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Erro ao obter dados do usuário por ID: ", e);
+            throw e;
+        } finally {
+            fecharBanco();
+        }
+        return usuario;
+    }
+
+    public Usuario obterUsuarioPorEmail(String email) throws SQLException, Exception {
+        Usuario usuario = null;
+        try {
+            abrirBanco();
+            String query = "SELECT id, nome, email, celular FROM usuarios WHERE email = ?";
+            PreparedStatement pst = con.prepareStatement(query);
+            pst.setString(1, email);
+            ResultSet rs = pst.executeQuery();
+
+            if (rs.next()) {
+                usuario = new Usuario();
+                usuario.setId(rs.getInt("id"));
+                usuario.setNome(rs.getString("nome"));
+                usuario.setEmail(rs.getString("email"));
+                usuario.setCelular(rs.getString("celular"));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Erro ao obter usuário por email: ", e);
             throw e;
         } finally {
             fecharBanco();
