@@ -1,131 +1,66 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/JSP_Servlet/Servlet.java to edit this template
- */
 package br.com.bean;
 
+import br.com.controle.Usuario;
 import br.com.controle.Reserva;
 import br.com.entidade.ManterReservas;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.List;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-/**
- *
- * @author vihma
- */
+
+@WebServlet(name = "MinhasReservasServlet", urlPatterns = {"/MinhasReservasServlet"})
 public class MinhasReservasServlet extends HttpServlet {
-    
-    private static final Logger logger = Logger.getLogger(MinhasReservasServlet.class.getName());
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet MinhasReservasServlet</title>");            
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet MinhasReservasServlet at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
-
-    // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
-    /**
-     * Handles the HTTP <code>GET</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    Integer id_usuario = (Integer) request.getSession().getAttribute("id");
-        if (id_usuario != null) {
-            logger.info("ID do usuário na sessão: " + id_usuario);
-            ManterReservas mr = new ManterReservas();
-            try {
-                List<Reserva> reservas = mr.buscarReservasPorUsuario(id_usuario);
-                if (reservas != null) {
-                    logger.info("Número de reservas encontradas: " + reservas.size());
-                } else {
-                    logger.info("Lista de reservas é nula.");
-                }
-                request.setAttribute("reservas", reservas);
-                request.getRequestDispatcher("paginaMinhasReservas.jsp").forward(request, response);
-            } catch (Exception ex) {
-                logger.log(Level.SEVERE, "Erro ao buscar reservas", ex);
-                response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Erro ao buscar reservas");
-            }
-        } else {
-            logger.warning("ID de usuário não encontrado na sessão.");
-            response.sendRedirect("paginaLogin.jsp");
+        try {
+            processRequest(request, response);
+        } catch (Exception e) {
+            throw new ServletException("Erro ao processar a solicitação", e);
         }
-        
-        processRequest(request, response);
     }
 
-    /**
-     * Handles the HTTP <code>POST</code> method.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    
-    
-    
-    
-    
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-    
-
-
-    
-
-        
-        
-        
-        
-        
-        processRequest(request, response);
+        try {
+            processRequest(request, response);
+        } catch (Exception e) {
+            throw new ServletException("Erro ao processar a solicitação", e);
+        }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, SQLException, Exception {
+        // Obtém o usuário logado da sessão
+        Usuario usuario = (Usuario) request.getSession().getAttribute("usuario");
+
+        if (usuario == null) {
+            // Se não houver usuário logado, redireciona para a página de login ou exibe uma mensagem de erro
+            response.sendRedirect("index.jsp");
+            return;
+        }
+
+        // Cria uma instância da classe ManterReservas
+        ManterReservas manterReservas = new ManterReservas();
+
+        // Obtém as reservas do usuário
+        List<Reserva> listaReservas = manterReservas.buscarReservasPorUsuario(usuario.getId());
+
+        // Adiciona a lista de reservas ao request
+        request.setAttribute("listaReservas", listaReservas);
+
+        // Encaminha a solicitação para a página JSP
+        request.getRequestDispatcher("paginaMinhasReservas.jsp").forward(request, response);
+    }
+
     @Override
     public String getServletInfo() {
-       return "Servlet que gerencia as reservas do usuário.";
-    }// </editor-fold>
-
+        return "Servlet que exibe as reservas do usuário logado";
+    }
 }

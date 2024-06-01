@@ -7,67 +7,73 @@
 <%@page import="java.util.List"%>
 <%@page import="br.com.controle.Reserva"%>
 <%@page import="br.com.controle.Usuario"%>
-<%@page import="br.com.entidade.ManterUsuarios"%>
 <%@page import="br.com.entidade.ManterReservas"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>JSP Page</title>
+        <title>Minhas Reservas</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     </head>
     
     <body>
-      <div class="row">
-    <div class="col-md-offset-2 col-md-8">
-        <div class="table-responsive">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th colspan="6" class="h2 text-center">Lista de Usuários</th>
-                    </tr>
-                </thead>
-                <br/>
-                <tr>
-                    <th>Código</th>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>Celular</th>
-                    <th colspan="2">Ações</th>
-                </tr>
+        <div class="container">
+            <h2 class="text-center">Minhas Reservas</h2>
+            <div class="table-responsive">
                 <%
-                    String pcodigo = "";
-                    String pnome = "";
-                    String pemail = "";
-                    String pcelular = "";
-                    UsuarioDAO dao = new UsuarioDAO(); 
-                    Usuario usuario = new Usuario();
-                    int idUsuarioLogado = (int) session.getAttribute("idUsuarioLogado"); // Supondo que o ID do usuário logado está na sessão
-                    ArrayList<Usuario> listaUsuario = dao.obterDadosUsuario(idUsuarioLogado); // Recebendo a lista gerada no DAO e colocando na lista que será impressa na tela
-                    for (int i = 0; i < listaUsuario.size(); i++) {                
-                        usuario = listaUsuario.get(i);
-                        pcodigo = String.valueOf(usuario.getId());
-                        pnome = usuario.getNome();
-                        pemail = usuario.getEmail();
-                        pcelular = usuario.getCelular();
+                    Usuario usuario = (Usuario) session.getAttribute("usuario");
+                    if (usuario == null) {
+                        out.println("<p class='text-center text-warning'>Usuário não autenticado.</p>");
+                    } else {
+                        ManterReservas manterReservas = new ManterReservas();
+                        List<Reserva> listaReservas = manterReservas.buscarReservasPorUsuario(usuario.getId());
+
+                        if (listaReservas.isEmpty()) {
+                            out.println("<p class='text-center text-warning'>Não há reservas feitas.</p>");
+                        } else {
                 %>
-                <tr>
-                    <td class="text-center"><%=pcodigo%></td>
-                    <td class="text-center"><%=pnome%></td> 
-                    <td class="text-center"><%=pemail%></td> 
-                    <td class="text-center"><%=pcelular%></td>
-                    <td class="text-center">
-                        <a href="alterar?id=<%=pcodigo%>" data-toggle="tooltip" title="Alterar">
-                            <span class="glyphicon glyphicon-pencil text-primary"> </span> </a>
-                        <a href="excluir?id=<%=pcodigo%>" onclick="return confirm('Confirma exclusão do registro <%=vnome%>?')" data-toggle="tooltip" title="Excluir">
-                            <span class="glyphicon glyphicon-trash text-danger"> </span> </a>
-                    </td>
-                </tr>
-                <% } // Fechando FOR %>
-            </table>
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Local</th>
+                            <th>Data</th>
+                            <th>Hora</th>
+                            <th>Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%
+                            for (Reserva reserva : listaReservas) {
+                        %>
+                        <tr>
+                            <td class="text-center"><%= reserva.getId_reserva() %></td>
+                            <td class="text-center"><%= reserva.getLocal_reserva() %></td>
+                            <td class="text-center"><%= reserva.getData_reserva() %></td>
+                            <td class="text-center"><%= reserva.getHora_reserva() %></td>
+                            <td class="text-center">
+                                <a href="alterarReserva?id=<%= reserva.getId_reserva() %>" data-toggle="tooltip" title="Alterar">
+                                    <span class="glyphicon glyphicon-pencil text-primary"> </span>
+                                </a>
+                                <a href="excluirReserva?id=<%= reserva.getId_reserva() %>" onclick="return confirm('Confirma exclusão da reserva <%= reserva.getLocal_reserva() %>?')" data-toggle="tooltip" title="Excluir">
+                                    <span class="glyphicon glyphicon-trash text-danger"> </span>
+                                </a>
+                            </td>
+                        </tr>
+                        <%
+                            }
+                        %>
+                    </tbody>
+                </table>
+                <%
+                        }
+                    }
+                %>
+            </div>
         </div>
-    </div>
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     </body>
- 
-   
 </html>
